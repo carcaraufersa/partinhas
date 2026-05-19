@@ -50,11 +50,7 @@ Outro dev do time abre o PR, olha o código, faz comentários se necessário e d
 #### 7. Merge e Fechamento:
 Com a aprovação, o desenvolvedor (ou o líder técnico) clica em Merge. O código entra na main. O card no Taiga é movido para Ready for QA e, após o teste rápido, para Closed.
 
-
-
-
-
-## Colaboradores
+## Devs
 
 #### dev-01: Pedro Henrique
 ##### Github: Pedro-HenriqueQrz
