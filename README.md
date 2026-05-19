@@ -38,11 +38,11 @@ git commit -m "feat: adiciona componente X para a tela Y"
 
 #### 4. Envie sua branch para o GitHub
 ```
-git push origin feature/TG-ID-sua-tarefa
+git push origin dev-[id_dev]/[ano][mes][semana]-[id_taiga]
 ```
 
 #### 5. Abrir o Pull Request (PR):
-Ele vai ao GitHub, clica em "Compare & pull request", descreve brevemente o que fez e vincula o link do card do Taiga. No Taiga, ele move o card para Code Review.
+Vá ao GitHub, clica em "Compare & pull request", descreve brevemente o que fez e vincula o link do card do Taiga. No Taiga, ele move o card para Code Review.
 
 #### 6. Revisão de Pares:
 Outro dev do time abre o PR, olha o código, faz comentários se necessário e dá o "Approve".
