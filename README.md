@@ -79,5 +79,5 @@ Com a aprovação, o desenvolvedor (ou o líder técnico) clica em Merge. O cód
 #### dev-09: Ludmila Monteiro
 ##### Github: LudmilaMonteiro
 
-#### dev-10: Hudson
+#### dev-10: Hudson Teste
 ##### Github: HudsonSena
