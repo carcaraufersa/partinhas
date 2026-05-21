@@ -1,20 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Label } from '@react-navigation/elements';
 
-export default function App() {
+export default function Register() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text>Unidos Por Patinhas</Text>
+      <TouchableOpacity>
+        <Text onPress={() => navigation.goBack()}> Voltar </Text>
+      </TouchableOpacity>
+      <Text>Crie sua conta</Text>
+      <Text>Preencha as informações para efetuar o seu cadastro</Text>
+      <Label>Nomes*</Label>
+      <TextInput placeholder="Fulano fulano"/>
+      <Label>Email*</Label>
+      <TextInput placeholder="fulano@@mail.com"/>
+      <Label>Senha*</Label>
+      <TextInput placeholder="" secureTextEntry={true}/>
+      <Label>Confirmar senha*</Label>
+      <TextInput placeholder="" secureTextEntry={true}/>
       <TouchableOpacity>
         <Button 
-          title='Cadastrar'
-          onPress={() => navigation.navigate('register')}/>    
+          title='Fazer meu cadastro'/>    
       </TouchableOpacity>
       <TouchableOpacity>
-        <Button 
-          title='Voltar'
-          onPress={() => navigation.navigate('home')}/>    
+        <Text>CONTINUE COM O GOOGLE</Text>   
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>

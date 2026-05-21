@@ -1,16 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-export default function App() {
-    const navigation = useNavigation();
+export default function Home() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text>Unidos Por Patinhas</Text>
       <TouchableOpacity>
-        <Button 
+        <Button
           title='Cadastre-se'
-          onPress={() => navigation.navigate('register')}/>    
+          onPress={() => navigation.navigate("cadastro")}/>   
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>
