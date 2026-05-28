@@ -1,7 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Button, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { Button } from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { Label } from '@react-navigation/elements';
+import { styles } from './styles';
+import { InputText } from '@/components/InputText';
 
 export default function Register() {
   const navigation = useNavigation();
@@ -10,20 +13,28 @@ export default function Register() {
       <TouchableOpacity>
         <Text onPress={() => navigation.goBack()}> Voltar </Text>
       </TouchableOpacity>
-      <Text>Crie sua conta</Text>
-      <Text>Preencha as informações para efetuar o seu cadastro</Text>
-      <Label>Nomes*</Label>
-      <TextInput placeholder="Fulano fulano"/>
-      <Label>Email*</Label>
-      <TextInput placeholder="fulano@@mail.com"/>
-      <Label>Senha*</Label>
-      <TextInput placeholder="" secureTextEntry={true}/>
-      <Label>Confirmar senha*</Label>
-      <TextInput placeholder="" secureTextEntry={true}/>
-      <TouchableOpacity>
-        <Button 
-          title='Fazer meu cadastro'/>    
-      </TouchableOpacity>
+      
+      <Text style={styles.title}>Crie sua conta</Text>
+      <Text style={styles.description}>Preencha as informações para efetuar o seu cadastro</Text>
+      <View style={styles.form}>
+        <View style={styles.input}>
+          <Label style={styles.label}>Nome*</Label>
+          <InputText placeholder="Fulando Fulando"/>
+        </View>
+        <View style={styles.input}>
+          <Label style={styles.label}>Email*</Label>
+          <InputText placeholder="fulano@@mail.com"/>
+        </View>
+        <View style={styles.input}>
+          <Label style={styles.label}>Senha*</Label>
+          <InputText placeholder="" secureTextEntry={true}/>
+        </View>
+        <View style={styles.input}>
+          <Label style={styles.label}>Confirmar senha*</Label>
+          <InputText  placeholder="" secureTextEntry={true}/>
+        </View>
+      </View>
+      <Button title='Fazer meu cadastro'/>
       <TouchableOpacity>
         <Text>CONTINUE COM O GOOGLE</Text>   
       </TouchableOpacity>
@@ -31,12 +42,3 @@ export default function Register() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
