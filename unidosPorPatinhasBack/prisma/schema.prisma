@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  USER
+}
+
+enum AnimalStatus {
+  AVAILABLE
+  IN_PROCESS
+  ADOPTED
+}
+
+enum RequestStatus {
+  PENDING
+  IN_ANALYSIS
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  telephone    String?
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+
+  adoptions Adoption[]
+}
+
+model Animal {
+  id               String       @id @default(uuid())
+  name             String
+  species          String
+  race             String?
+  ageMonths        Int?
+  description      String?
+  status           AnimalStatus @default(AVAILABLE)
+  registrationDate DateTime     @default(now())
+
+  adoptions Adoption[]
+}
+
+model Adoption {
+  id            String        @id @default(uuid())
+  requestStatus RequestStatus @default(PENDING)
+  requestDate   DateTime      @default(now())
+  responseDate  DateTime?
+
+  userId   String
+  animalId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  animal Animal @relation(fields: [animalId], references: [id])
+}
