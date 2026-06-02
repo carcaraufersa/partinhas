@@ -1,18 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Button } from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { Label } from '@react-navigation/elements';
 import { styles } from './styles';
 import { InputText } from '@/components/InputText';
+import { ButtonIcon } from '@/components/ButtonIcon';
 
 export default function Register() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <Text onPress={() => navigation.goBack()}> Voltar </Text>
-      </TouchableOpacity>
+      <ButtonIcon name="arrow-back" style={styles.buttonIcon} onPress={() => navigation.goBack()}/>
       
       <Text style={styles.title}>Crie sua conta</Text>
       <Text style={styles.description}>Preencha as informações para efetuar o seu cadastro</Text>
@@ -23,7 +22,7 @@ export default function Register() {
         </View>
         <View style={styles.input}>
           <Label style={styles.label}>Email*</Label>
-          <InputText placeholder="fulano@@mail.com"/>
+          <InputText placeholder="Fulando@@mail.com"/>
         </View>
         <View style={styles.input}>
           <Label style={styles.label}>Senha*</Label>
@@ -34,10 +33,15 @@ export default function Register() {
           <InputText  placeholder="" secureTextEntry={true}/>
         </View>
       </View>
-      <Button title='Fazer meu cadastro'/>
-      <TouchableOpacity>
-        <Text>CONTINUE COM O GOOGLE</Text>   
-      </TouchableOpacity>
+      <View style={styles.buttons}>
+        <Button title='Fazer meu cadastro'/>
+        <Image style={styles.ouLine} source={require("@/assets/ouline.png")}/>
+        <TouchableOpacity style={styles.googleButton} onPress={() => navigation.goBack()} >
+          <Image source={require("@/assets/google.png")} style={styles.googleImg} width={24} height={24}/>
+          <Text style={styles.buttonText}>CONTINUE COM O GOOGLE</Text>
+        </TouchableOpacity>      
+      </View>
+      
       <StatusBar style="auto" />
     </View>
   );

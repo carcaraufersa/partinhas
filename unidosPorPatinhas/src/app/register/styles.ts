@@ -35,5 +35,38 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'Quicksand_400Regular',
     },
+    buttons: {
+        width: "100%",
+        gap: 40,
+        alignItems: "center",
+    },
+    buttonIcon: {
+        borderRadius: 100,
+        borderWidth: .2,
+        borderColor: "#505050",
+        padding: 8,
+    },
+    ouLine: {
+        width: "100%",
+        height: 24,
+    },
+    googleButton: {
+        width: "100%",
+        height: 48,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 16,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "#C3C5CB",
+    },
+    googleImg: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    buttonText: {
+        fontFamily: 'Quicksand_700Bold',
+    }
 
 })
