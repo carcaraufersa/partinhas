@@ -7,7 +7,7 @@ import { styles } from './styles';
 import { InputText } from '@/components/InputText';
 import { ButtonIcon } from '@/components/ButtonIcon';
 
-export default function Register() {
+export default function SignUp() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
