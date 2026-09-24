@@ -52,32 +52,50 @@ Com a aprovação, o desenvolvedor (ou o líder técnico) clica em Merge. O cód
 
 ## Devs
 
-#### dev-01: Pedro Henrique
+#### dev-01: Pedro Henrique x
 ##### Github: Pedro-HenriqueQrz
 
-#### dev-02: Jozenias Antônio
+#### dev-02: Jozenias Antônio x
 ##### Github: fayrghos
 
-#### dev-03: Johan Queiroz
+#### dev-03: Johan Queiroz x
 ##### Github: johanpq
 
-#### dev-04: Lavínia Dantas
+#### dev-04: Lavínia Dantas x
 ##### Github: LilPuppet
 
-#### dev-05: Mateus Gomes
+#### dev-05: Mateus Gomes x
 ##### Github: GSmateus07
 
-#### dev-06: Enzo Morgan
+#### dev-06: Enzo Morgan x
 ##### Github: enzomorgan
 
-#### dev-07: Andeson Almeida
+#### dev-07: Andeson Almeida x
 ##### Github: AndesondaCruz
 
-#### dev-08: Lucas Assis da Costa Pereira
+#### dev-08: Lucas Assis da Costa Pereira x
 ##### Github: lucascp05
 
-#### dev-09: Ludmila Monteiro
-##### Github: LudmilaMonteiro
+#### dev-09: Luiz Felipe x
+##### Github: luizLopes10
 
-#### dev-10: Hudson Teste
+#### dev-10: Hudson Sena x
 ##### Github: HudsonSena
+
+#### dev-11: João Victor da Silva Lira -
+##### Github: -----
+
+#### dev-12: Leandro Savio Barros Gomes x
+##### Github: Leandrinz
+
+#### dev-13: Pedro Luz x
+##### Github: pedrodamiaoluz
+
+#### dev-14: Thyago Melo x
+##### Github: thyagofab
+
+#### dev-15: Gerliano
+##### Github: -----
+
+#### dev-16: Pedro Maia
+##### Github: -----
