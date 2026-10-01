@@ -146,6 +146,15 @@ npx prisma migrate dev
 npm run start:dev
 ```
 
+#### 7. Visualize o banco de dados com Prisma Studio (opcional)
+```bash
+npx prisma studio
+```
+
+O Prisma Studio estará disponível em: `http://localhost:5555`
+
+Use para visualizar e gerenciar os dados do banco diretamente pelo navegador.
+
 O servidor estará disponível em: `http://localhost:3000`
 
 ### Endpoints disponíveis

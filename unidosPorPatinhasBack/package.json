@@ -64,11 +64,8 @@
     "typescript-eslint": "^8.20.0"
   },
   "jest": {
-<<<<<<< HEAD
-  "moduleFileExtensions": [
-=======
+
     "moduleFileExtensions": [
->>>>>>> ab08aa8 (chore: adiciona ConfigModule para carregar variáveis de ambiente)
     "js",
     "json",
     "ts"
