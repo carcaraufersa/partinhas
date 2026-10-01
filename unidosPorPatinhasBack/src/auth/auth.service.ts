@@ -10,6 +10,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
   ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async signIn(dto: SignInDto) {
     // Busca o usuário pelo email no banco de dados
@@ -41,5 +42,8 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
+  }
+}
+    return user;
   }
 }
