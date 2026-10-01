@@ -10,6 +10,8 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
   ) {}
+
+  async signIn(dto: SignInDto) {
   constructor(private readonly prisma: PrismaService) {}
 
   async signIn(dto: SignInDto) {
@@ -18,11 +20,15 @@ export class AuthService {
       where: { email: dto.email },
     });
 
+    // Tratamento de credenciais inválidas — email não encontrado
     // Se não encontrar o usuário, lança erro 401
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas.');
     }
 
+    const passwordMatch = await bcrypt.compare(dto.password, user.passwordHash);
+
+    // Tratamento de credenciais inválidas — senha incorreta
     // Compara a senha digitada com o hash salvo no banco
     const passwordMatch = await bcrypt.compare(dto.password, user.passwordHash);
 
