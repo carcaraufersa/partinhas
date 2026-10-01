@@ -1,10 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
 import { SignInDto } from './dto/signin.dto';
 
 @Injectable()
 export class AuthService {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
   constructor(private readonly prisma: PrismaService) {}
 
   async signIn(dto: SignInDto) {
@@ -26,6 +31,19 @@ export class AuthService {
       throw new UnauthorizedException('Credenciais inválidas.');
     }
 
+    // Monta o payload do token com informações do usuário
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    // Gera e retorna o token JWT
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
+  }
+}
     return user;
   }
 }
