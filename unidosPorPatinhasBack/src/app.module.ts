@@ -1,3 +1,4 @@
+cat > src/app.module.ts << 'EOF'
 import { Module } from '@nestjs/common';
 import { AdoptionModule } from './adoption/adoption.module';
 import { AppController } from './app.controller';
