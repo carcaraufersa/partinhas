@@ -15,3 +15,8 @@ import { AuthService } from './auth.service';
   exports: [AuthService],
 })
 export class AuthModule {}
+  imports: [PrismaModule],
+  providers: [AuthService],
+  exports: [AuthService],
+})
+export class AuthModule {}
