@@ -3,9 +3,9 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Button } from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
-import { InputText } from '@/components/InputText';
-import { ButtonIcon } from '@/components/ButtonIcon';
-import { ButtonText } from '@/components/ButtonText';
+import { InputText } from '../../components/InputText';
+import { ButtonIcon } from '../../components/ButtonIcon';
+import { ButtonText } from '../../components/ButtonText';
 
 // Tipagem dos erros — um erro opcional para cada campo
 type FormErrors = {
