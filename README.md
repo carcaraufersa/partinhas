@@ -99,3 +99,94 @@ Com a aprovação, o desenvolvedor (ou o líder técnico) clica em Merge. O cód
 
 #### dev-16: Pedro Maia
 ##### Github: -----
+
+## Rodando o Backend Localmente
+
+### Pré-requisitos
+* Node.js instalado
+* Docker e Docker Compose instalados
+
+### Passo a passo
+
+#### 1. Acesse a pasta do backend
+```bash
+cd unidosPorPatinhasBack
+```
+
+#### 2. Instale as dependências
+```bash
+npm install
+```
+
+#### 3. Configure as variáveis de ambiente
+Crie um arquivo `.env` na raiz do backend baseado no `.env.example`:
+```bash
+cp .env.example .env
+```
+
+Edite o `.env` com suas configurações:
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/DB_NAME?schema=public"
+JWT_SECRET="sua-chave-secreta-aqui"
+JWT_EXPIRES_IN="7d"
+```
+
+#### 4. Suba o banco de dados com Docker
+```bash
+docker compose up -d
+```
+
+#### 5. Execute as migrations do Prisma
+```bash
+npx prisma migrate dev
+```
+
+#### 6. Inicie o servidor
+```bash
+npm run start:dev
+```
+
+#### 7. Visualize o banco de dados com Prisma Studio (opcional)
+```bash
+npx prisma studio
+```
+
+O Prisma Studio estará disponível em: `http://localhost:5555`
+
+Use para visualizar e gerenciar os dados do banco diretamente pelo navegador.
+
+O servidor estará disponível em: `http://localhost:3000`
+
+### Endpoints disponíveis
+
+#### Autenticação
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | /auth/login | Realiza login e retorna token JWT |
+
+#### Exemplo de requisição — Login
+```json
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "usuario@email.com",
+  "password": "suasenha123"
+}
+```
+
+#### Exemplo de resposta — Sucesso (200)
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+#### Exemplo de resposta — Credenciais inválidas (401)
+```json
+{
+  "message": "Credenciais inválidas.",
+  "error": "Unauthorized",
+  "statusCode": 401
+}
+```

@@ -1,54 +1,74 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: '100%',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF', 
-    alignItems: 'center',
     paddingHorizontal: 24,
-    paddingTop: 60,
+    paddingTop: 40, 
     paddingBottom: 40,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   header: {
     width: '100%',
     alignItems: 'flex-start',
-    marginBottom: 20,
+    paddingHorizontal: 24, 
+    marginTop: 20,
   },
-  smallLogo: {
-    width: 50, 
-    height: 50,
+  logo: {
+    width: '20%',
+    maxWidth: 80, 
+    height: undefined,
+    aspectRatio: 1, 
+    resizeMode: 'contain',
+  },
+  illustrationContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   illustration: {
-    width: 280, 
-    height: 280,
+    width: '100%',
+    height: 300, 
+  },
+  textContainer: {
+    alignItems: 'center',
     marginBottom: 32,
+    width: '100%',
   },
   title: {
+    fontFamily: 'Quicksand_700Bold',
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333333',
+    color: '#1A1A1A', 
     textAlign: 'center',
     marginBottom: 16,
+    lineHeight: 32,
   },
-  subtitle: {
+  description: {
+    fontFamily: 'Inter_400Regular',
     fontSize: 14,
     color: '#666666',
     textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: 40,
+    lineHeight: 22,
+    paddingHorizontal: 8,
   },
   button: {
-    backgroundColor: '#8B5CF6', 
-    width: '100%',
+    backgroundColor: '#8257E5', 
+    width: '95%',
     height: 56,
     borderRadius: 8,
-    alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 'auto', 
+    alignItems: 'center',
+    alignSelf: 'center',
   },
   buttonText: {
+    fontFamily: 'Inter_500Medium',
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: 'bold',
   }
 });
