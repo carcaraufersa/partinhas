@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { Button } from "../../components/Button";
-import { InputText } from "@/components/InputText";
-import { ButtonIcon } from "@/components/ButtonIcon";
+import { InputText } from "../../components/InputText";
+import { ButtonIcon } from "../../components/ButtonIcon";
 import { styles } from "./styles";
 
 type FormErrors = {
   name?: string;
   email?: string;
+  phone?: string;
   password?: string;
   confirmPassword?: string;
 };
@@ -20,6 +21,7 @@ export default function SignUp() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
@@ -29,6 +31,10 @@ export default function SignUp() {
 
     if (!name.trim()) {
       newErrors.name = "O nome é obrigatório.";
+    }
+
+    if (!phone.trim()) {
+      newErrors.phone = "O telefone é obrigatório.";
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -54,12 +60,36 @@ export default function SignUp() {
     return Object.keys(newErrors).length === 0;
   }
 
-  function handleSubmit() {
+ function handleSubmit() {
     const isValid = validate();
     if (!isValid) return;
 
-    // TODO: integrar com a API quando o backend estiver pronto
-    console.log("Formulário válido:", { name, email });
+    // TODO: Integrar com a API de cadastro quando o backend estiver pronto.
+
+    // --- SIMULAÇÃO VISUAL DA TAREFA #113 ---
+    const testarEmailDuplicado = true; 
+
+    if (testarEmailDuplicado) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Este e-mail já está em uso.",
+      }));
+      console.log("Simulação Front-end: Erro de e-mail duplicado acionado no ecrã.");
+      return;
+    }
+    // ---------------------------------------
+
+    console.log("Dados de cadastro validados pelo Front-end:", { name, email, phone });
+    Alert.alert(
+      "Conta Criada!",
+      "O seu cadastro foi realizado com sucesso.",
+      [
+        { 
+          text: "Fazer Login", 
+          onPress: () => navigation.navigate("signIn" as never) 
+        }
+      ]
+    );
   }
 
   return (
@@ -79,7 +109,7 @@ export default function SignUp() {
         <View style={styles.input}>
           <Text style={styles.label}>Nome*</Text>
           <InputText
-            placeholder="Fulando Fulando"
+            placeholder="Fulano Fulano"
             value={name}
             onChangeText={setName}
             errorMessage={errors.name}
@@ -88,7 +118,18 @@ export default function SignUp() {
         </View>
 
         <View style={styles.input}>
-          <Text style={styles.label}>Email*</Text>
+          <Text style={styles.label}>Telefone*</Text>
+          <InputText
+            placeholder="(00) 00000-0000"
+            value={phone}
+            onChangeText={setPhone}
+            errorMessage={errors.phone}
+            keyboardType="phone-pad"
+          />
+        </View>
+
+        <View style={styles.input}>
+          <Text style={styles.label}>E-mail*</Text>
           <InputText
             placeholder="exemplo@email.com"
             value={email}
@@ -124,10 +165,10 @@ export default function SignUp() {
 
       <View style={styles.buttons}>
         <Button title="Fazer meu cadastro" onPress={handleSubmit} />
-        <Image style={styles.ouLine} source={require("@/assets/ouline.png")} />
+        <Image style={styles.ouLine} source={require("../../assets/ouline.png")} />
         <TouchableOpacity style={styles.googleButton}>
           <Image
-            source={require("@/assets/google.png")}
+            source={require("../../assets/google.png")}
             style={styles.googleImg}
             width={24}
             height={24}
