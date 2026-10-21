@@ -1,5 +1,12 @@
 import axios from 'axios';
 
-export const api = axios.create({
-  baseURL: 'http://192.168.1.9:3000', 
+// URL base da API — alterar para a URL de produção quando o deploy for feito
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
+
+export default api;
