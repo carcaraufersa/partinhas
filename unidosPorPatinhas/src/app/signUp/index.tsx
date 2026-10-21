@@ -2,7 +2,9 @@ import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import axios, { AxiosError } from "axios"; 
 
+import { api } from "../../services/api";
 import { Button } from "../../components/Button";
 import { InputText } from "../../components/InputText";
 import { ButtonIcon } from "../../components/ButtonIcon";
@@ -15,6 +17,13 @@ type FormErrors = {
   password?: string;
   confirmPassword?: string;
 };
+
+// Interface do erro vindo do NestJS
+interface NestJsErrorResponse {
+  message: string | string[];
+  error?: string;
+  statusCode?: number;
+}
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -60,36 +69,69 @@ export default function SignUp() {
     return Object.keys(newErrors).length === 0;
   }
 
- function handleSubmit() {
+  async function handleSubmit() {
     const isValid = validate();
     if (!isValid) return;
 
-    // TODO: Integrar com a API de cadastro quando o backend estiver pronto.
+    try {
+      // Faz o pedido POST à API
+      const response = await api.post('/users', {
+        name: name,
+        email: email.toLowerCase(),
+        telephone: phone,
+        password: password,
+      });
 
-    // --- SIMULAÇÃO VISUAL DA TAREFA #113 ---
-    const testarEmailDuplicado = true; 
+      console.log("Conta criada com sucesso:", response.data);
+      Alert.alert(
+        "Conta Criada!",
+        "O seu cadastro foi realizado com sucesso.",
+        [
+          { 
+            text: "Fazer Login", 
+            onPress: () => navigation.navigate("signIn" as never) 
+          }
+        ]
+      );
 
-    if (testarEmailDuplicado) {
-      setErrors((prev) => ({
-        ...prev,
-        email: "Este e-mail já está em uso.",
-      }));
-      console.log("Simulação Front-end: Erro de e-mail duplicado acionado no ecrã.");
-      return;
-    }
-    // ---------------------------------------
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const error = err as AxiosError<NestJsErrorResponse>; 
+        const status = error.response?.status;
+        const errorData = error.response?.data;
 
-    console.log("Dados de cadastro validados pelo Front-end:", { name, email, phone });
-    Alert.alert(
-      "Conta Criada!",
-      "O seu cadastro foi realizado com sucesso.",
-      [
-        { 
-          text: "Fazer Login", 
-          onPress: () => navigation.navigate("signIn" as never) 
+        // Task #113: Tratamento da ConflictException (E-mail duplicado)
+        if (status === 409) {
+          setErrors((prev) => ({
+            ...prev,
+            email: "Este e-mail já está em uso.",
+          }));
+          return;
         }
-      ]
-    );
+
+        // Task #114: Tratamento do ValidationPipe (Erros de campos enviados pelo back-end)
+        if (status === 400) {
+          const errorMessage = Array.isArray(errorData?.message) 
+            ? errorData.message.join('\n') 
+            : errorData?.message || "Verifique os dados informados.";
+            
+          Alert.alert("Atenção aos dados", errorMessage);
+          return;
+        }
+
+        // Outros erros do servidor (Ex: 500)
+        Alert.alert(
+          "Erro no Servidor",
+          "Ocorreu um problema ao tentar criar a conta. Tente novamente mais tarde."
+        );
+      } else {
+        // Falha de rede / API offline
+        Alert.alert(
+          "Sem Conexão",
+          "Não foi possível conectar ao servidor. Verifique a sua internet."
+        );
+      }
+    }
   }
 
   return (
@@ -102,7 +144,7 @@ export default function SignUp() {
 
       <Text style={styles.title}>Crie sua conta</Text>
       <Text style={styles.description}>
-        Preencha as informações para efetuar o seu cadastro
+        Preencha as informações para fazer seu cadastro
       </Text>
 
       <View style={styles.form}>
