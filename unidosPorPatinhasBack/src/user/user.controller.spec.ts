@@ -41,6 +41,10 @@ describe('UserController (e2e)', () => {
       telephone: '84999999999',
       role: 'USER',
       createdAt: new Date(),
+      password: 'senha-que-nao-deve-ser-retornada',
+      passwordHash: 'hash-que-nao-deve-ser-retornado',
+      access_token: 'token-que-nao-deve-ser-retornado',
+      refreshToken: 'refresh-token-que-nao-deve-ser-retornado',
     });
 
     const response = await request(app.getHttpServer())
@@ -53,9 +57,20 @@ describe('UserController (e2e)', () => {
       })
       .expect(201);
 
-    expect(response.body.email).toBe('teste@example.com');
-    expect(response.body.name).toBe('Lucas Teste');
-    expect(response.body.passwordHash).toBeUndefined();
+    expect(response.body).toEqual({
+      id: '123',
+      name: 'Lucas Teste',
+      email: 'teste@example.com',
+    });
+    expect(prismaMock.user.create).toHaveBeenCalledWith({
+      data: {
+        name: 'Lucas Teste',
+        email: 'teste@example.com',
+        passwordHash: expect.any(String),
+        telephone: '84999999999',
+      },
+      select: { id: true, name: true, email: true },
+    });
   });
 
   it('deve retornar erro quando o e-mail já estiver cadastrado', async () => {
