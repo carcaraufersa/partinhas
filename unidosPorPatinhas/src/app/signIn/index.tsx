@@ -1,29 +1,27 @@
 import { useState } from "react";
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { Button } from '../../components/Button';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
 import { InputText } from '../../components/InputText';
 import { ButtonIcon } from '../../components/ButtonIcon';
 import { ButtonText } from '../../components/ButtonText';
+import api from '../../services/api';
 
-// Tipagem dos erros — um erro opcional para cada campo
 type FormErrors = {
   email?: string;
   password?: string;
+  api?: string;  // erro retornado pela API
 };
 
 export default function SignIn() {
   const navigation = useNavigation();
 
-  // Estados dos campos
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // Estado dos erros — começa vazio (sem erros)
   const [errors, setErrors] = useState<FormErrors>({});
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Valida os campos e retorna true se tudo estiver correto
   function validate(): boolean {
     const newErrors: FormErrors = {};
 
@@ -44,13 +42,41 @@ export default function SignIn() {
     return Object.keys(newErrors).length === 0;
   }
 
-  // Chamado ao pressionar "Acessar minha conta"
-  function handleSubmit() {
+  async function handleSubmit() {
     const isValid = validate();
     if (!isValid) return;
 
-    // TODO: integrar com a API de login quando o backend estiver pronto
-    console.log("Login válido:", { email });
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      // #64 — Envia email e senha para a API
+      const response = await api.post('/auth/login', { email, password });
+
+      // #65 — Processa resposta da API
+      const { access_token } = response.data;
+
+      // #66 — Armazena o token (por enquanto no console — AsyncStorage será usado futuramente)
+      console.log("Login realizado com sucesso! Token:", access_token);
+
+      // TODO: navegar para a tela principal após armazenar o token
+      // navigation.navigate("home");
+
+    } catch (error: any) {
+      // #96 — Apresenta erros retornados pela API
+      const status = error?.response?.status;
+      const message = error?.response?.data?.message;
+
+      if (status === 401) {
+        setErrors({ api: message ?? "Credenciais inválidas." });
+      } else if (status === 400) {
+        setErrors({ api: message ?? "Dados inválidos." });
+      } else {
+        setErrors({ api: "Não foi possível conectar ao servidor. Tente novamente." });
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -96,10 +122,22 @@ export default function SignIn() {
             />
           </View>
         </View>
+
+        {/* #96 — Exibe erro retornado pela API */}
+        {errors.api && (
+          <Text style={{ color: '#E53E3E', fontSize: 14, fontFamily: 'Inter_400Regular' }}>
+            {errors.api}
+          </Text>
+        )}
       </View>
 
       <View style={styles.buttons}>
-        <Button title="Acessar minha conta" onPress={handleSubmit} />
+        {/* Mostra indicador de loading enquanto aguarda a API */}
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#7952b3" />
+        ) : (
+          <Button title="Acessar minha conta" onPress={handleSubmit} />
+        )}
         <View style={styles.register}>
           <Text>NÃO POSSUI CONTA? </Text>
           <ButtonText
