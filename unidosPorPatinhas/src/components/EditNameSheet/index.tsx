@@ -2,13 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Modal, Platform, Pressable, Text, View } from "react-native";
 import { Button } from "@/components/Button";
 import { InputText } from "@/components/InputText";
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/constants/validation";
 import type { Profile, ServiceResult } from "@/services/profileService";
 import { styles } from "./styles";
-
-// Limites do nome (depois do trim). O backend ainda não impõe limite: quando o
-// PATCH /users/me existir, o DTO deve usar os mesmos valores.
-export const NAME_MIN_LENGTH = 2;
-export const NAME_MAX_LENGTH = 60;
 
 type Props = {
     visible: boolean;

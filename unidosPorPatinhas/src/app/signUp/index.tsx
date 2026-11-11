@@ -8,6 +8,7 @@ import { api } from "../../services/api";
 import { Button } from "../../components/Button";
 import { InputText } from "../../components/InputText";
 import { ButtonIcon } from "../../components/ButtonIcon";
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "../../constants/validation";
 import { styles } from "./styles";
 
 type FormErrors = {
@@ -38,8 +39,13 @@ export default function SignUp() {
   function validate(): boolean {
     const newErrors: FormErrors = {};
 
-    if (!name.trim()) {
+    const trimmedName = name.trim();
+    if (!trimmedName) {
       newErrors.name = "O nome é obrigatório.";
+    } else if (trimmedName.length < NAME_MIN_LENGTH) {
+      newErrors.name = `O nome deve ter pelo menos ${NAME_MIN_LENGTH} caracteres.`;
+    } else if (trimmedName.length > NAME_MAX_LENGTH) {
+      newErrors.name = `O nome deve ter no máximo ${NAME_MAX_LENGTH} caracteres.`;
     }
 
     if (!phone.trim()) {
@@ -76,7 +82,7 @@ export default function SignUp() {
     try {
       // Faz o pedido POST à API
       const response = await api.post('/users', {
-        name: name,
+        name: name.trim(),
         email: email.toLowerCase(),
         telephone: phone,
         password: password,
@@ -156,6 +162,7 @@ export default function SignUp() {
             onChangeText={setName}
             errorMessage={errors.name}
             autoCapitalize="words"
+            maxLength={NAME_MAX_LENGTH}
           />
         </View>
 
