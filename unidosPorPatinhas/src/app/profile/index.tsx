@@ -22,11 +22,30 @@ export default function Profile() {
         if (isSigningOut.current) return; // evita toques repetidos
         isSigningOut.current = true;
 
-        // 1) limpa token/sessão e o estado global; 2) reinicia a pilha só com o login,
-        // para o botão Voltar não conseguir reabrir o Perfil
-        await signOut();
-        resetTo("signIn");
+        try {
+            // 1) limpa token/sessão e o estado global; 2) reinicia a pilha só com o login,
+            // para o botão Voltar não conseguir reabrir o Perfil
+            await signOut();
+            resetTo("signIn");
+        } finally {
+            isSigningOut.current = false; // se algo falhar, o botão volta a funcionar
+        }
     }
+
+    // Sair precisa existir em qualquer estado da tela: se o perfil falhar ao carregar
+    // (servidor fora do ar), o usuário não pode ficar preso na sessão.
+    const signOutButton = (
+        <TouchableOpacity
+            style={styles.signOut}
+            onPress={handleSignOut}
+            activeOpacity={0.6}
+            accessibilityRole="button"
+            accessibilityLabel="Sair da minha conta"
+        >
+            <Text style={styles.signOutText}>Sair da minha conta</Text>
+            <Ionicons name="log-out-outline" size={24} color="#7952b3" />
+        </TouchableOpacity>
+    );
 
     async function handleSaveName(name: string) {
         const result = await updateProfileName(name);
@@ -56,6 +75,7 @@ export default function Profile() {
                             <Button title="Tentar novamente" onPress={reload} />
                         </View>
                     )}
+                    <View style={styles.retryButton}>{signOutButton}</View>
                 </View>
             )}
 
@@ -76,16 +96,7 @@ export default function Profile() {
                     />
                     <ProfileRow label="E-mail" value={state.profile.email} />
 
-                    <TouchableOpacity
-                        style={styles.signOut}
-                        onPress={handleSignOut}
-                        activeOpacity={0.6}
-                        accessibilityRole="button"
-                        accessibilityLabel="Sair da minha conta"
-                    >
-                        <Text style={styles.signOutText}>Sair da minha conta</Text>
-                        <Ionicons name="log-out-outline" size={24} color="#7952b3" />
-                    </TouchableOpacity>
+                    {signOutButton}
                 </View>
             )}
 
