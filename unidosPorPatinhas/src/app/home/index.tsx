@@ -1,22 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import SignIn from '../signIn';
+import { Text, View, TouchableOpacity, Button, Image } from 'react-native';
+import { styles } from './styles';
+import { InputText } from '@/components/InputText';
+import { ButtonIcon } from '@/components/ButtonIcon';
+import { Camera, Settings } from 'lucide-react-native';
+import { Navigation } from '@/components/Navigation';
+
 export default function Home() {
-  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <SignIn />
+      <Image source={require("@/assets/iconname.png")} style={styles.logo} />
+      <Text>Olá, Maria</Text>
+      <View style={styles.searchContainer}>
+        <InputText placeholder="O que está procurando?" />
+        <ButtonIcon name="more-vert" onPress={() => {}} />
+      </View>
+      <Navigation />
     </View>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontFamily: 'Poppins_700Bold'
-  },
-});
+};
