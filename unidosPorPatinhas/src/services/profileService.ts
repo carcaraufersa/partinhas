@@ -21,8 +21,9 @@ export type ServiceResult<T> =
     | { ok: false; error: ServiceError };
 
 // O backend ainda não tem GET/PATCH /users/me. Enquanto isso, usa dados simulados.
-// Para usar a API real: defina EXPO_PUBLIC_USE_MOCK_PROFILE=false.
-const USE_MOCK = process.env.EXPO_PUBLIC_USE_MOCK_PROFILE !== "false";
+// Para usar a API real em desenvolvimento: defina EXPO_PUBLIC_USE_MOCK_PROFILE=false.
+// O mock só existe em desenvolvimento (__DEV__): um build de produção nunca exibe dados falsos.
+const USE_MOCK = __DEV__ && process.env.EXPO_PUBLIC_USE_MOCK_PROFILE !== "false";
 
 let mockProfile: Profile = { id: "mock-user", name: "Maria Luiza", email: "maria@gmail.com" };
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
