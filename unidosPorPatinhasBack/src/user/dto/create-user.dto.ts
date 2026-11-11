@@ -1,7 +1,6 @@
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
-  IsNotEmpty,
   IsOptional,
   IsString,
   Length,
@@ -15,7 +14,6 @@ export class CreateUserDto {
     typeof value === 'string' ? value.trim() : value,
   )
   @IsString()
-  @IsNotEmpty()
   @Length(2, 60, { message: 'O nome deve ter entre 2 e 60 caracteres.' })
   name!: string;
 
