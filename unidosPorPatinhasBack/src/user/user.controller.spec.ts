@@ -115,7 +115,7 @@ describe('UserController (e2e)', () => {
     it('deve rejeitar quando o nome não é enviado', async () => {
       const response = await request(app.getHttpServer())
         .post('/users')
-        .send({ email: 'limite@example.com', password: '123456' })
+        .send({ email: 'limite@example.com', password: '12345678' })
         .expect(400);
 
       expect([response.body.message].flat()).toContain(
