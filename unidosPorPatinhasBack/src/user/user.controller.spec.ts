@@ -94,6 +94,8 @@ describe('UserController (e2e)', () => {
     });
 
     it.each([
+      ['nome vazio', ''],
+      ['apenas espaços', '   '],
       ['1 caractere', 'a'],
       ['1 caractere com espaços nas pontas', '  a  '],
       ['mais de 60 caracteres', 'a'.repeat(61)],
@@ -104,6 +106,18 @@ describe('UserController (e2e)', () => {
         .expect(400);
 
       // O pipe do spec devolve array; o do main.ts (exceptionFactory) devolve string
+      expect([response.body.message].flat()).toContain(
+        'O nome deve ter entre 2 e 60 caracteres.',
+      );
+      expect(prismaMock.user.create).not.toHaveBeenCalled();
+    });
+
+    it('deve rejeitar quando o nome não é enviado', async () => {
+      const response = await request(app.getHttpServer())
+        .post('/users')
+        .send({ email: 'limite@example.com', password: '123456' })
+        .expect(400);
+
       expect([response.body.message].flat()).toContain(
         'O nome deve ter entre 2 e 60 caracteres.',
       );
