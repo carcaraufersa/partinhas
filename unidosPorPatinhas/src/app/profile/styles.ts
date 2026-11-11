@@ -57,4 +57,18 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#E5E5E5",
     },
+    signOut: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginTop: 24,
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: "#E5E5E5",
+    },
+    signOutText: {
+        fontSize: 16,
+        fontFamily: "Quicksand_700Bold",
+        color: "#7952b3",
+    },
 });
