@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "@/components/Button";
@@ -32,12 +32,24 @@ export default function Profile() {
         }
     }
 
+    // Pede confirmação antes de encerrar a sessão (evita sair por um toque acidental)
+    function confirmSignOut() {
+        Alert.alert(
+            "Sair da conta?",
+            "Você precisará entrar novamente para acessar seu perfil.",
+            [
+                { text: "Cancelar", style: "cancel" },
+                { text: "Sair", style: "destructive", onPress: handleSignOut },
+            ]
+        );
+    }
+
     // Sair precisa existir em qualquer estado da tela: se o perfil falhar ao carregar
     // (servidor fora do ar), o usuário não pode ficar preso na sessão.
     const signOutButton = (
         <TouchableOpacity
             style={styles.signOut}
-            onPress={handleSignOut}
+            onPress={confirmSignOut}
             activeOpacity={0.6}
             accessibilityRole="button"
             accessibilityLabel="Sair da minha conta"
