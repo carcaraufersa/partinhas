@@ -60,7 +60,7 @@ export default function SignIn() {
       console.log("Login realizado com sucesso! Token:", access_token);
 
       // TODO: navegar para a tela principal após armazenar o token
-      // navigation.navigate("home");
+      navigation.navigate("home");
 
     } catch (error: any) {
       // #96 — Apresenta erros retornados pela API

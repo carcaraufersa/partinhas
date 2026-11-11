@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text, TextProps } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
+import { styles } from "./styles";
 
 type Props = {
     name: keyof typeof MaterialIcons.glyphMap;
@@ -9,7 +10,7 @@ type Props = {
 export function ButtonIcon({ name, style, ...rest}: Props) {
     return (
         <TouchableOpacity onPress={rest.onPress} style={style}>
-            <MaterialIcons name={name} size={24} />
+            <MaterialIcons name={name} size={24} style={styles.container} />
         </TouchableOpacity>
     )
 }
