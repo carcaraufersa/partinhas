@@ -8,6 +8,7 @@ import { ButtonIcon } from '../../components/ButtonIcon';
 import { ButtonText } from '../../components/ButtonText';
 import api from '../../services/api';
 import { resetTo } from '../../routes/navigationRef';
+import { useAuth } from '../../contexts/AuthContext';
 
 type FormErrors = {
   email?: string;
@@ -17,6 +18,7 @@ type FormErrors = {
 
 export default function SignIn() {
   const navigation = useNavigation();
+  const { signIn } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,8 +59,8 @@ export default function SignIn() {
       // #65 — Processa resposta da API
       const { access_token } = response.data;
 
-      // #66 — Armazena o token (por enquanto no console — AsyncStorage será usado futuramente)
-      console.log("Login realizado com sucesso! Token:", access_token);
+      // #66 — Armazena o token de forma persistente e atualiza o estado global de autenticação
+      await signIn(access_token);
 
       // Entra na área logada limpando a pilha: Voltar não retorna ao login
       resetTo("main");
