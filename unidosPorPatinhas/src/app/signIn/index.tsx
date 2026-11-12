@@ -7,6 +7,7 @@ import { InputText } from '../../components/InputText';
 import { ButtonIcon } from '../../components/ButtonIcon';
 import { ButtonText } from '../../components/ButtonText';
 import api from '../../services/api';
+import { resetTo } from '../../routes/navigationRef';
 
 type FormErrors = {
   email?: string;
@@ -59,8 +60,8 @@ export default function SignIn() {
       // #66 — Armazena o token (por enquanto no console — AsyncStorage será usado futuramente)
       console.log("Login realizado com sucesso! Token:", access_token);
 
-      // TODO: navegar para a tela principal após armazenar o token
-      // navigation.navigate("home");
+      // Entra na área logada limpando a pilha: Voltar não retorna ao login
+      resetTo("main");
 
     } catch (error: any) {
       // #96 — Apresenta erros retornados pela API
