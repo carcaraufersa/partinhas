@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { KeyboardAvoidingView, Modal, Platform, Pressable, Text, View } from "react-native";
 import { Button } from "@/components/Button";
 import { InputText } from "@/components/InputText";
+import { NAME_MAX_LENGTH, NAME_MIN_LENGTH } from "@/constants/validation";
 import type { Profile, ServiceResult } from "@/services/profileService";
 import { styles } from "./styles";
 
@@ -39,6 +40,15 @@ export function EditNameSheet({ visible, initialName, onClose, onSave }: Props) 
         const trimmedName = name.trim();
         if (!trimmedName) {
             setError("O nome é obrigatório.");
+            return;
+        }
+        if (trimmedName.length < NAME_MIN_LENGTH) {
+            setError(`O nome deve ter pelo menos ${NAME_MIN_LENGTH} caracteres.`);
+            return;
+        }
+        // O maxLength do campo já barra a digitação; aqui cobre texto colado e outros caminhos
+        if (trimmedName.length > NAME_MAX_LENGTH) {
+            setError(`O nome deve ter no máximo ${NAME_MAX_LENGTH} caracteres.`);
             return;
         }
 
@@ -93,6 +103,7 @@ export function EditNameSheet({ visible, initialName, onClose, onSave }: Props) 
                             }}
                             errorMessage={error}
                             autoFocus
+                            maxLength={NAME_MAX_LENGTH}
                             autoCapitalize="words"
                             returnKeyType="done"
                             onSubmitEditing={handleSave}
