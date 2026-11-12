@@ -1,14 +1,24 @@
+import { useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button } from "@/components/Button";
+import { EditNameSheet } from "@/components/EditNameSheet";
 import { ProfileRow } from "@/components/ProfileRow";
 import { useProfile } from "@/hooks/useProfile";
+import { updateProfileName } from "@/services/profileService";
 import { styles } from "./styles";
 
 export default function Profile() {
     const insets = useSafeAreaInsets();
-    const { state, reload } = useProfile();
+    const { state, reload, setProfile } = useProfile();
+    const [isEditingName, setIsEditingName] = useState(false);
+
+    async function handleSaveName(name: string) {
+        const result = await updateProfileName(name);
+        if (result.ok) setProfile(result.data);
+        return result;
+    }
 
     return (
         <View style={[styles.container, { paddingTop: insets.top + 16 }]}>
@@ -45,9 +55,22 @@ export default function Profile() {
                     </View>
 
                     <Text style={styles.section}>Informações pessoais</Text>
-                    <ProfileRow label="Nome" value={state.profile.name} />
+                    <ProfileRow
+                        label="Nome"
+                        value={state.profile.name}
+                        onPress={() => setIsEditingName(true)}
+                    />
                     <ProfileRow label="E-mail" value={state.profile.email} />
                 </View>
+            )}
+
+            {state.status === "success" && (
+                <EditNameSheet
+                    visible={isEditingName}
+                    initialName={state.profile.name}
+                    onClose={() => setIsEditingName(false)}
+                    onSave={handleSaveName}
+                />
             )}
         </View>
     );
