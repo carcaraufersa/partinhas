@@ -52,7 +52,7 @@ describe('UserController (e2e)', () => {
       .send({
         name: 'Lucas Teste',
         email: 'teste@example.com',
-        password: '123456',
+        password: '12345678',
         telephone: '84999999999',
       })
       .expect(201);
@@ -84,7 +84,7 @@ describe('UserController (e2e)', () => {
       .send({
         name: 'Outro Lucas',
         email: 'teste@example.com',
-        password: '123456',
+        password: '12345678',
       })
       .expect(409);
   });
@@ -93,7 +93,7 @@ describe('UserController (e2e)', () => {
     const body = (name: string) => ({
       name,
       email: 'limite@example.com',
-      password: '123456',
+      password: '12345678',
     });
 
     beforeEach(() => {
@@ -130,7 +130,7 @@ describe('UserController (e2e)', () => {
     it('deve rejeitar quando o nome não é enviado', async () => {
       const response = await request(app.getHttpServer())
         .post('/users')
-        .send({ email: 'limite@example.com', password: '123456' })
+        .send({ email: 'limite@example.com', password: '12345678' })
         .expect(400);
 
       expect([response.body.message].flat()).toContain(
@@ -160,6 +160,50 @@ describe('UserController (e2e)', () => {
           data: expect.objectContaining({ name: 'Maria' }),
         }),
       );
+    });
+  });
+
+  // Mesmo mínimo do login (SignInDto): senha criada aqui precisa conseguir entrar
+  describe('tamanho da senha (mínimo de 8 caracteres)', () => {
+    const body = (password: string) => ({
+      name: 'Lucas Teste',
+      email: 'senha@example.com',
+      password,
+    });
+
+    beforeEach(() => {
+      prismaMock.user.findUnique.mockResolvedValue(null);
+      prismaMock.user.create.mockClear();
+      prismaMock.user.create.mockResolvedValue({
+        id: '1',
+        name: 'Lucas Teste',
+        email: 'senha@example.com',
+        role: 'USER',
+        createdAt: new Date(),
+      });
+    });
+
+    it.each([
+      ['6 caracteres', '123456'],
+      ['7 caracteres', '1234567'],
+    ])('deve rejeitar senha com %s', async (_label, password) => {
+      const response = await request(app.getHttpServer())
+        .post('/users')
+        .send(body(password))
+        .expect(400);
+
+      // O pipe do spec devolve array; o do main.ts (exceptionFactory) devolve string
+      expect([response.body.message].flat()).toContain(
+        'A senha deve ter pelo menos 8 caracteres.',
+      );
+      expect(prismaMock.user.create).not.toHaveBeenCalled();
+    });
+
+    it('deve aceitar senha com 8 caracteres', async () => {
+      await request(app.getHttpServer())
+        .post('/users')
+        .send(body('12345678'))
+        .expect(201);
     });
   });
 });

@@ -21,7 +21,7 @@ export class CreateUserDto {
   email!: string;
 
   @IsString()
-  @MinLength(6)
+  @MinLength(8, { message: 'A senha deve ter pelo menos 8 caracteres.' })
   password!: string;
 
   @IsOptional()
