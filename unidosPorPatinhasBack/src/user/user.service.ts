@@ -38,9 +38,9 @@ export class UserService {
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002')
-          throw new ConflictException('E-mail já cadastrado.');
+          throw new ConflictException('E-mail já cadastrado. ');
         if (error.code === 'P2025')
-          throw new NotFoundException('Usuário não encontrado.');
+          throw new NotFoundException('Usuário não encontrado. ');
       }
       throw error;
     }
