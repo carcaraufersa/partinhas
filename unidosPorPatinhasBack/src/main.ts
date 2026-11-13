@@ -14,6 +14,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
+      transform: true, // necessário para o @Transform (trim do nome) rodar
       exceptionFactory: (errors) => {
         return new BadRequestException(
           Object.values(errors[0]?.constraints ?? {})[0],
