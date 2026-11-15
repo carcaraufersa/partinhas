@@ -13,10 +13,21 @@ import type { AuthenticatedRequest } from '../auth/jwt-auth.guard';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @Patch('me/password')
+  @UseGuards(JwtAuthGuard)
+  changePassword(
+    @Req() request: AuthenticatedRequest,
+    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    dto: ChangePasswordDto,
+  ) {
+    return this.userService.changePassword(request.user.id, dto);
+  }
 
   @Patch('me')
   @UseGuards(JwtAuthGuard)
