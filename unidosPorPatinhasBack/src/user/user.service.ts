@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { UpdateUserProfileDto } from './dto/update-user-profile.dto';
@@ -10,10 +11,34 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserProfileResponseDto } from './dto/user-profile-response.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
+
+  async changePassword(userId: string, dto: ChangePasswordDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { passwordHash: true },
+    });
+
+    if (
+      !user ||
+      !(await bcrypt.compare(dto.currentPassword, user.passwordHash))
+    ) {
+      throw new UnauthorizedException('Não foi possível alterar a senha.');
+    }
+
+    const passwordHash = await bcrypt.hash(dto.newPassword, 10);
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash },
+      select: { id: true },
+    });
+
+    return { message: 'Senha alterada com sucesso.' };
+  }
 
   async updateProfile(userId: string, dto: UpdateUserProfileDto) {
     const data = {
