@@ -4,7 +4,7 @@ import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios, { AxiosError } from "axios"; 
 
-import { api } from "../../services/api";
+import api from "../../services/api";
 import { Button } from "../../components/Button";
 import { InputText } from "../../components/InputText";
 import { ButtonIcon } from "../../components/ButtonIcon";
