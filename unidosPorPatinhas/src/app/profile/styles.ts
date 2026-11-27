@@ -9,6 +9,8 @@ export const COLORS = {
   avatarBg: "#F7F3FC",
   divider: "#ECECEC",
   white: "#FFFFFF",
+  error: "#E53E3E",
+  overlay: "rgba(0, 0, 0, 0.4)",
 };
 
 export const styles = StyleSheet.create({
@@ -123,5 +125,78 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "500",
     color: COLORS.purple,
+  },
+  modalKeyboardWrapper: {
+    flex: 1,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: COLORS.overlay,
+    justifyContent: "flex-end",
+  },
+  modalContent: {
+    backgroundColor: COLORS.white,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingHorizontal: 24,
+    paddingTop: 12,
+  },
+  modalHandle: {
+    width: 36,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: COLORS.purple,
+    alignSelf: "center",
+    marginBottom: 20,
+  },
+  modalLabel: {
+    fontSize: 13,
+    color: COLORS.textSecondary,
+    marginBottom: 8,
+  },
+  modalInput: {
+    height: 48,
+    borderWidth: 1.5,
+    borderColor: COLORS.purpleLightBorder,
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    fontSize: 15,
+    color: COLORS.textPrimary,
+    backgroundColor: COLORS.white,
+  },
+  modalInputFocused: {
+    borderColor: COLORS.purple,
+  },
+  modalInputError: {
+    borderColor: COLORS.error,
+  },
+  modalErrorText: {
+    fontSize: 12,
+    color: COLORS.error,
+    marginTop: 6,
+  },
+  modalConfirmButton: {
+    height: 48,
+    borderRadius: 8,
+    backgroundColor: COLORS.purple,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+  },
+  modalConfirmButtonText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: COLORS.white,
+  },
+  modalCancelButton: {
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 8,
+  },
+  modalCancelButtonText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: COLORS.textSecondary,
   },
 });
