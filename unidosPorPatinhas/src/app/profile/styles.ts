@@ -140,6 +140,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     paddingHorizontal: 24,
     paddingTop: 12,
+    maxHeight: "90%",
   },
   modalHandle: {
     width: 36,
@@ -148,6 +149,9 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.purple,
     alignSelf: "center",
     marginBottom: 20,
+  },
+  modalFieldGroup: {
+    marginBottom: 14,
   },
   modalLabel: {
     fontSize: 13,
@@ -163,6 +167,28 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     color: COLORS.textPrimary,
     backgroundColor: COLORS.white,
+  },
+  modalPasswordContainer: {
+    height: 48,
+    borderWidth: 1.5,
+    borderColor: COLORS.purpleLightBorder,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: COLORS.white,
+  },
+  modalPasswordInput: {
+    flex: 1,
+    height: "100%",
+    paddingHorizontal: 14,
+    fontSize: 15,
+    color: COLORS.textPrimary,
+  },
+  modalEyeButton: {
+    paddingHorizontal: 12,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   modalInputFocused: {
     borderColor: COLORS.purple,
@@ -181,7 +207,10 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.purple,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20,
+    marginTop: 12,
+  },
+  modalConfirmButtonDisabled: {
+    opacity: 0.65,
   },
   modalConfirmButtonText: {
     fontSize: 15,
